@@ -1,0 +1,29 @@
+
+    <div class="custom-title">  
+        <h1>{{ collection.title }}</h1>
+    </div>
+  
+  {%- if collection.description != blank -%}
+    <p>{{ collection.description }}</p>
+  {%- endif -%}
+  
+  <ul>
+    {%- for product in collection.products -%}
+      <li>
+        <a class="product-card" href="{{ product.url | within: collection }}">
+          <img src="{{ product.featured_image.src | img_url: '1024x' }}" alt="">
+          <span>{{ product.title }}</span>
+          <p>
+            <span aria-hidden="true">—</span>
+            {%- if product.price_varies -%}
+              <span class="visuallyhidden">Starting at</span>
+              {{ product.price_min | money_without_trailing_zeros }}
+              <span aria-hidden="true">+</span>
+            {%- else -%}
+              {{ product.price | money_without_trailing_zeros }}
+            {%- endif -%}
+          </p>
+        </a>
+      </li>
+    {%- endfor -%}
+  </ul>
